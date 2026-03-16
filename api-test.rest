@@ -1,0 +1,39 @@
+### Root route
+GET http://localhost:1198/
+Content-Type: application/json
+
+###
+
+### Create user - sample 1
+POST http://localhost:1198/users
+Content-Type: application/json
+
+{
+  "name": "Ashish",
+  "age": 28,
+  "city": "Bangalore"
+}
+
+###
+
+### Create user - sample 2
+POST http://localhost:1198/users
+Content-Type: application/json
+
+{
+  "name": "Rahul",
+  "age": 25,
+  "city": "Delhi"
+}
+
+###
+
+### Create user - sample 3
+POST http://localhost:1198/users
+Content-Type: application/json
+
+{
+  "name": "Priya",
+  "age": 30,
+  "city": "Mumbai"
+}
