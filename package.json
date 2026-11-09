@@ -1,7 +1,7 @@
 {
     "name": "express-project-06-json-body-parser-api",
     "version": "1.0.0",
-    "description": "",
+    "description": "An Express.js API demonstrating JSON body parsing and validation for a sample user payload.",
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
@@ -11,8 +11,17 @@
         "type": "git",
         "url": "git+https://github.com/a2rp/express-project-06-json-body-parser-api.git"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": [
+        "express",
+        "expressjs",
+        "nodejs",
+        "rest-api",
+        "json-api",
+        "body-parser",
+        "input-validation",
+        "post-api"
+    ],
+    "author": "Ashish Ranjan",
     "license": "ISC",
     "type": "commonjs",
     "bugs": {

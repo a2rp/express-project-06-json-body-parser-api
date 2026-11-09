@@ -1,204 +1,119 @@
 # express-project-06-json-body-parser-api
 
-A simple Express.js backend API demonstrating how to accept and process JSON request bodies using the Express JSON body parser middleware.
+A small Express.js API that demonstrates parsing and validating JSON request bodies. It returns the submitted sample data and does not save users to a database.
 
----
+## What it demonstrates
 
-## Project Goal
+- Parsing JSON with Express `express.json()` middleware
+- Handling a `POST /users` request
+- Validating fields and returning clear `400 Bad Request` responses
+- Separating routes and controllers
 
-This project demonstrates how backend APIs receive JSON data from clients using POST requests and how Express parses that data using built-in middleware.
+## How parsing works
 
-Key learning points:
+Register the parser before the routes. It reads JSON request bodies and exposes the parsed object as `req.body`:
 
-- Express server setup
-- JSON body parsing using `express.json()`
-- POST request handling
-- Basic controller and route structure
-- Using nodemon for development
-
----
-
-## Tech Stack
-
-- Node.js
-- Express.js
-- Nodemon
-
----
-
-## Project Structure
-
+```js
+app.use(express.json());
 ```
-express-project-06-json-body-parser-api
-│
-├── src
-│   ├── controllers
+
+Malformed JSON is handled separately and returns a JSON `400` response.
+
+## Project structure
+
+```text
+express-project-06-json-body-parser-api/
+├── src/
+│   ├── controllers/
 │   │   └── user.controller.js
-│   │
-│   └── routes
+│   └── routes/
 │       └── user.route.js
-│
+├── .gitignore
 ├── api-test.rest
 ├── index.js
+├── package-lock.json
 ├── package.json
-└── .gitignore
+└── README.md
 ```
 
----
+## Requirements and setup
 
-## Installation
-
-Clone the repository
-
-```bash
-git clone https://github.com/a2rp/express-project-06-json-body-parser-api.git
-cd express-project-06-json-body-parser-api
-```
-
-Install dependencies
+Use Node.js 18 or later. Install dependencies with:
 
 ```bash
 npm install
 ```
 
----
-
-## Run the Project
-
-Development mode using nodemon
+Start with automatic restarts during development:
 
 ```bash
 npm run dev
 ```
 
-Server runs at
+Or start the server directly:
 
-```
-http://localhost:1198
-```
-
----
-
-## API Endpoints
-
-### Root Route
-
-```
-GET /
+```bash
+npm start
 ```
 
-Response
+The API listens at `http://localhost:1198`.
+
+## Endpoints
+
+### `GET /`
+
+Returns a simple status message:
 
 ```json
 {
-    "message": "JSON Body Parser API is running"
+  "message": "JSON Body Parser API is running"
 }
 ```
 
----
+### `POST /users`
 
-### Create User
-
-```
-POST /users
-```
-
-Request Body
+Send `Content-Type: application/json` and a JSON object with a non-empty `name` and `city` (up to 100 characters each) and an integer `age` from 0 to 120:
 
 ```json
 {
+  "name": "Ashish",
+  "age": 28,
+  "city": "Bangalore"
+}
+```
+
+A valid request returns `201 Created`:
+
+```json
+{
+  "message": "User created successfully",
+  "receivedData": {
     "name": "Ashish",
     "age": 28,
     "city": "Bangalore"
+  }
 }
 ```
 
-Response
+Invalid or missing fields return `400 Bad Request`. Malformed JSON returns a `400` response with error code `INVALID_JSON`.
 
-```json
-{
-    "message": "User created successfully",
-    "receivedData": {
-        "name": "Ashish",
-        "age": 28,
-        "city": "Bangalore"
-    }
-}
+Use the included [`api-test.rest`](./api-test.rest) file with the VS Code REST Client, or send the example with curl:
+
+```bash
+curl -X POST http://localhost:1198/users \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Ashish","age":28,"city":"Bangalore"}'
 ```
 
----
+## Author and links
 
-## Key Concept
-
-The main concept demonstrated in this project is the JSON body parser middleware.
-
-```
-app.use(express.json())
-```
-
-This middleware allows Express to read JSON request bodies and make them available through:
-
-```
-req.body
-```
-
-Without this middleware, Express cannot read JSON request payloads.
-
----
-
-## API Testing
-
-Requests can be tested using the included REST client file:
-
-```
-api-test.rest
-```
-
-Supported tools:
-
-- VS Code REST Client
-- Thunder Client
-- Postman
-- curl
-
----
-
-## Learning Outcome
-
-By completing this project you understand:
-
-- How APIs accept JSON data
-- How Express parses request bodies
-- How to structure routes and controllers
-- How POST APIs work in backend systems
-
----
-
-## Author
-
-Ashish Ranjan
-
----
-
-Follow me
-
-- GitHub https://github.com/a2rp
-- Portfolio https://www.ashishranjan.net
-- LinkedIn https://www.linkedin.com/in/aashishranjan
-- Facebook https://www.facebook.com/theash.ashish/
-
-## Links
-
-- Portfolio: [https://www.ashishranjan.net](https://www.ashishranjan.net)
-- GitHub: [https://github.com/a2rp](https://github.com/a2rp)
-- CodePen: [https://codepen.io/ash1198](https://codepen.io/ash1198)
-- LinkedIn: [https://www.linkedin.com/in/aashishranjan](https://www.linkedin.com/in/aashishranjan)
-- Facebook: [https://www.facebook.com/theash.ashish/](https://www.facebook.com/theash.ashish/)
-- YouTube: [https://www.youtube.com/@ashishranjan-ashz?sub_confirmation=1](https://www.youtube.com/@ashishranjan-ashz?sub_confirmation=1)
-- Email: [ash.ranjan09@gmail.com](mailto:ash.ranjan09@gmail.com)
-
-## Support
-
-- Support: [https://a2rp-donation-page.netlify.app/](https://a2rp-donation-page.netlify.app/)
-- Buy Me A Coffee: [https://buymeacoffee.com/a2rp](https://buymeacoffee.com/a2rp)
-- Patreon: [https://patreon.com/a2rp](https://patreon.com/a2rp)
+- GitHub: https://github.com/a2rp
+- Portfolio: https://www.ashishranjan.net
+- LinkedIn: https://www.linkedin.com/in/aashishranjan
+- Facebook: https://www.facebook.com/theash.ashish/
+- CodePen: https://codepen.io/ash1198
+- YouTube: https://www.youtube.com/@ashishranjan-ashz?sub_confirmation=1
+- Email: ash.ranjan09@gmail.com
+- Support: https://a2rp-donation-page.netlify.app/
+- Buy Me a Coffee: https://buymeacoffee.com/ashishranjan
+- Patreon: https://www.patreon.com/ashishranjan

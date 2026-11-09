@@ -15,6 +15,19 @@ app.get("/", (req, res) => {
     });
 });
 
+app.use((error, req, res, next) => {
+    if (error.type === "entity.parse.failed") {
+        return res.status(400).json({
+            error: {
+                code: "INVALID_JSON",
+                message: "Request body must contain valid JSON.",
+            },
+        });
+    }
+
+    next(error);
+});
+
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
